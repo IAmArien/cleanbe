@@ -4,3 +4,4 @@
  */
 
 export * from './userCredentials/createUserCredential';
+export * from './userInfo/createUserInfo';

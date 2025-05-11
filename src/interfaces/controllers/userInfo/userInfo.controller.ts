@@ -3,25 +3,25 @@
  * Reuse as a whole or in part is prohibited without permission.
  */
 
-import { UserCredentialsRequestDto, UserCredentialsResponseDto } from "@/domain";
-import { CreateUserCredential } from "@/domain/usecases";
+import { UserInfoRequestDto, UserInfoResponseDto } from "@/domain";
+import { CreateUserInfo } from "@/domain/usecases";
 import { handleSequelizeError } from "@/server/errorHandling";
 import { ApiResponse, ApiResponseStatus } from "@/types";
 import { Request, Response } from "express";
 import { container, injectable } from "tsyringe";
 
 @injectable()
-export class UserCredentialsController {
+export class UserInfoController {
 
-  async createUserCredential(req: Request<any, any, UserCredentialsRequestDto>, res: Response) {
-    const createUserCredential = container.resolve<CreateUserCredential>("CreateUserCredential");
-    let response: Partial<ApiResponse<UserCredentialsResponseDto, any>> = {};
+  async createUserInfo(req: Request<any, any, UserInfoRequestDto>, res: Response) {
+    const createUserInfo = container.resolve<CreateUserInfo>("CreateUserInfo");
+    let response: Partial<ApiResponse<UserInfoResponseDto, any>> = {};
     let status: ApiResponseStatus = 201;
     try {
-      const responseDto = await createUserCredential.invoke(req.body);
+      const responseDto = await createUserInfo.invoke(req.body);
       response = {
         status: status,
-        message: "User Credentials Created Successfully",
+        message: "User Info Created Successfully",
         data: responseDto
       };
     } catch (error) {

@@ -5,6 +5,10 @@
 
 export * from './models/userCredentials.model';
 export * from './models/userCredentials.dto';
+export * from './models/userInfo.model';
+export * from './models/userInfo.dto';
 
 export * from './repository/userCredentials.datasource';
 export * from './repository/userCredentials.repository';
+export * from './repository/userInfo.datasource';
+export * from './repository/userInfo.repository';

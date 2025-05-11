@@ -10,7 +10,7 @@ import express from 'express';
 const app = express();
 app.use(express.json());
 
-app.use('/user', userRoutes);
+app.use('/api/user', userRoutes);
 
 app.listen(3000, async () => {
   try {

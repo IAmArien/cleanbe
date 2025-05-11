@@ -5,3 +5,5 @@
 
 export * from './userCredentials/userCredentials.controller';
 export * from './userCredentials/userCredentials.datasource';
+export * from './userInfo/userInfo.datasource';
+export * from './userInfo/userInfo.controller';

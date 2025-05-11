@@ -4,7 +4,7 @@
  */
 
 import { UserInfoRequestDto, UserInfoResponseDto } from "@/domain";
-import { CreateUserInfo } from "@/domain/usecases";
+import { CreateUserInfo, GetUserInfo } from "@/domain/usecases";
 import { handleSequelizeError } from "@/server/errorHandling";
 import { ApiResponse, ApiResponseStatus } from "@/types";
 import { Request, Response } from "express";
@@ -24,6 +24,35 @@ export class UserInfoController {
         message: "User Info Created Successfully",
         data: responseDto
       };
+    } catch (error) {
+      const errorResponse = handleSequelizeError(error);
+      status = errorResponse.status;
+      response = errorResponse;
+    }
+    res.status(status).json(response);
+  }
+
+  async getUserInfo(req: Request<any, any, any, { userId: number }>, res: Response) {
+    const getUserInfo = container.resolve<GetUserInfo>("GetUserInfo");
+    let response: Partial<ApiResponse<UserInfoResponseDto, any>> = {};
+    let status: ApiResponseStatus = 200;
+    try {
+      const userId = req.query.userId;
+      const responseDto = await getUserInfo.invoke(userId);
+      if (responseDto !== null) {
+        response = {
+          status: status,
+          message: "User Info Retrieved Successfully",
+          data: responseDto
+        };
+      } else {
+        status = 422;
+        response = {
+          status: status,
+          message: `No such user found for user ${userId}`,
+          data: null
+        };
+      }
     } catch (error) {
       const errorResponse = handleSequelizeError(error);
       status = errorResponse.status;

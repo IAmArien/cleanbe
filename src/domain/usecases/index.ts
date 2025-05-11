@@ -5,3 +5,4 @@
 
 export * from './userCredentials/createUserCredential';
 export * from './userInfo/createUserInfo';
+export * from './userInfo/getUserInfo';

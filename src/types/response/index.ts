@@ -31,6 +31,6 @@ export type ApiResponseStatus =
 export interface ApiResponse<T = any, T1 = any> {
   status: ApiResponseStatus;
   message: string;
-  data?: T;
-  errors?: T1;
+  data?: T | null;
+  errors?: T1 | null;
 }

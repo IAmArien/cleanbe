@@ -12,4 +12,8 @@ export class UserInfoRepository {
   createUserInfo(userInfo: UserInfoRequestDto): Promise<UserInfoResponseDto> {
     return this.dataSource.createUserInfo(userInfo);
   }
+
+  getUserInfo(userId: number): Promise<UserInfoResponseDto | null> {
+    return this.dataSource.getUserInfo(userId);
+  }
 }

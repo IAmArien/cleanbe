@@ -7,4 +7,5 @@ import { UserInfoRequestDto, UserInfoResponseDto } from "@/domain";
 
 export interface UserInfoDataSource {
   createUserInfo: (userInfo: UserInfoRequestDto) => Promise<UserInfoResponseDto>;
+  getUserInfo: (userId: number) => Promise<UserInfoResponseDto | null>;
 }

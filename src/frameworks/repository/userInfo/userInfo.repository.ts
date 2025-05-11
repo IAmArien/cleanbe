@@ -23,4 +23,24 @@ export class UserInfoRepository {
       }
     );
   }
+
+  getUserInfo(userId: number) {
+    return new Promise<UserInfoResponseDto | null>(
+      async (resolve, reject) => {
+        try {
+          const model = await UserInfoModel.findOne({
+            where: { id: userId }
+          });
+          if (model !== null) {
+            const response = toUserInfoResponseDto(model);
+            resolve(response);
+          } else {
+            resolve(null);
+          }
+        } catch (error) {
+          reject(error);
+        }
+      }
+    );
+  }
 }

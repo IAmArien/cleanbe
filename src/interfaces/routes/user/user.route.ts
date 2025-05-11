@@ -14,5 +14,6 @@ const infoController = container.resolve<UserInfoController>("UserInfoController
 
 router.post("/credentials/create", credentialsController.createUserCredential);
 router.post("/info/create", infoController.createUserInfo);
+router.get("/info", infoController.getUserInfo);
 
 export default router;

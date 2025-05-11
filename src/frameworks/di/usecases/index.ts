@@ -4,7 +4,7 @@
  */
 
 import { UserCredentialsDataSource, UserCredentialsRepository, UserInfoDataSource, UserInfoRepository } from "@/domain";
-import { CreateUserCredential, CreateUserInfo } from "@/domain/usecases";
+import { CreateUserCredential, CreateUserInfo, GetUserInfo } from "@/domain/usecases";
 import { container } from "tsyringe";
 
 container.register<UserCredentialsRepository>(
@@ -51,6 +51,18 @@ container.register<CreateUserInfo>(
         "UserInfoRepositoryDomain"
       );
       return new CreateUserInfo(repository);
+    }
+  }
+);
+
+container.register<GetUserInfo>(
+  "GetUserInfo",
+  {
+    useFactory: (container) => {
+      const repository = container.resolve<UserInfoRepository>(
+        "UserInfoRepositoryDomain"
+      );
+      return new GetUserInfo(repository);
     }
   }
 );

@@ -27,6 +27,13 @@ export function handleSequelizeError<T>(error: T): ApiResponse {
       };
       return response;
     }
+  } else if (error instanceof Error) {
+    const response: ApiResponse<any, Error> = {
+      status: 400,
+      message: `${error.message}`,
+      errors: error
+    };
+    return response;
   }
   return {
     status: 500,

@@ -4,7 +4,7 @@
  */
 
 import { UserInfoRequestDto, UserInfoResponseDto } from "@/domain";
-import { CreateUserInfo, GetUserInfo } from "@/domain/usecases";
+import { CreateUserInfo, GetUserInfo, PatchUserInfo } from "@/domain/usecases";
 import { handleSequelizeError } from "@/server/errorHandling";
 import { ApiResponse, ApiResponseStatus } from "@/types";
 import { Request, Response } from "express";
@@ -49,9 +49,36 @@ export class UserInfoController {
         status = 422;
         response = {
           status: status,
-          message: `No such user found for user ${userId}`,
+          message: `No such user found for ${userId}`,
           data: null
         };
+      }
+    } catch (error) {
+      const errorResponse = handleSequelizeError(error);
+      status = errorResponse.status;
+      response = errorResponse;
+    }
+    res.status(status).json(response);
+  }
+
+  async patchUserInfo(
+    req: Request<{ userId: number }, any, UserInfoRequestDto>,
+    res: Response
+  ) {
+    const patchUserInfo = container.resolve<PatchUserInfo>("PatchUserInfo");
+    let response: Partial<ApiResponse<UserInfoResponseDto, any>> = {};
+    let status: ApiResponseStatus = 200;
+    try {
+      const userId = req.params.userId;
+      const responseDto = await patchUserInfo.invoke(userId, req.body);
+      if (responseDto !== null) {
+        response = {
+          status: status,
+          message: "User Info Updated Successfully",
+          data: responseDto
+        };
+      } else {
+        response = { status: status, message: "No Changes Applied" };
       }
     } catch (error) {
       const errorResponse = handleSequelizeError(error);

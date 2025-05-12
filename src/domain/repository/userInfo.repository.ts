@@ -16,4 +16,11 @@ export class UserInfoRepository {
   getUserInfo(userId: number): Promise<UserInfoResponseDto | null> {
     return this.dataSource.getUserInfo(userId);
   }
+
+  patchUserInfo(
+    userId: number,
+    userInfo: UserInfoRequestDto
+  ): Promise<UserInfoResponseDto | null> {
+    return this.dataSource.patchUserInfo(userId, userInfo);
+  }
 }

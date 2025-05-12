@@ -14,6 +14,10 @@ export class UserInfoDataSourceImpl implements UserInfoDataSource {
     @inject("UserInfoRepositoryFrameworks") private repository: UserInfoRepository
   ) {}
 
+  patchUserInfo(userId: number, userInfo: UserInfoRequestDto): Promise<UserInfoResponseDto | null> {
+    return this.repository.patchUserInfo(userId, userInfo);
+  }
+
   getUserInfo(userId: number): Promise<UserInfoResponseDto | null> {
     return this.repository.getUserInfo(userId);
   }

@@ -5,3 +5,4 @@
 
 export * from './userCredentials/userCredentials.repository';
 export * from './userInfo/userInfo.repository';
+export * from './userLogin/userLogin.repository';

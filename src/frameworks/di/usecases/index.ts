@@ -3,8 +3,8 @@
  * Reuse as a whole or in part is prohibited without permission.
  */
 
-import { UserCredentialsDataSource, UserCredentialsRepository, UserInfoDataSource, UserInfoRepository } from "@/domain";
-import { CreateUserCredential, CreateUserInfo, DeleteUserCredential, DeleteUserInfo, GetUserInfo, PatchUserInfo } from "@/domain/usecases";
+import { UserCredentialsDataSource, UserCredentialsRepository, UserInfoDataSource, UserInfoRepository, UserLoginDataSource, UserLoginRepository } from "@/domain";
+import { CreateUserCredential, CreateUserInfo, DeleteUserCredential, DeleteUserInfo, GetUserInfo, LoginUser, PatchUserInfo } from "@/domain/usecases";
 import { container } from "tsyringe";
 
 container.register<UserCredentialsRepository>(
@@ -99,6 +99,30 @@ container.register<DeleteUserInfo>(
         "UserInfoRepositoryDomain"
       );
       return new DeleteUserInfo(repository);
+    }
+  }
+);
+
+container.register<UserLoginRepository>(
+  "UserLoginRepositoryDomain",
+  {
+    useFactory: (container) => {
+      const dataSource = container.resolve<UserLoginDataSource>(
+        "UserLoginDataSourceImpl"
+      );
+      return new UserLoginRepository(dataSource);
+    }
+  }
+)
+
+container.register<LoginUser>(
+  "LoginUser",
+  {
+    useFactory: (container) => {
+      const repository = container.resolve<UserLoginRepository>(
+        "UserLoginRepositoryDomain"
+      );
+      return new LoginUser(repository);
     }
   }
 );

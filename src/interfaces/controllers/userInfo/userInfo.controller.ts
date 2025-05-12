@@ -5,6 +5,7 @@
 
 import { UserInfoRequestDto, UserInfoResponseDto } from "@/domain";
 import { CreateUserInfo, DeleteUserInfo, GetUserInfo, PatchUserInfo } from "@/domain/usecases";
+import { AuthRequest, AuthUser } from "@/interfaces/auth";
 import { handleSequelizeError } from "@/server/errorHandling";
 import { ApiResponse, ApiResponseStatus } from "@/types";
 import { Request, Response } from "express";
@@ -32,19 +33,29 @@ export class UserInfoController {
     res.status(status).json(response);
   }
 
-  async getUserInfo(req: Request<any, any, any, { userId: number }>, res: Response) {
+  async getUserInfo(req: AuthRequest<any, any, any, { userId: string }>, res: Response) {
     const getUserInfo = container.resolve<GetUserInfo>("GetUserInfo");
     let response: Partial<ApiResponse<UserInfoResponseDto, any>> = {};
     let status: ApiResponseStatus = 200;
     try {
-      const userId = req.query.userId;
-      const responseDto = await getUserInfo.invoke(userId);
-      if (responseDto !== null) {
-        response = {
-          status: status,
-          message: "User Info Retrieved Successfully",
-          data: responseDto
-        };
+      const authUser: AuthUser | undefined = req.user;
+      const userId = parseInt(req.query.userId);
+      if (authUser && authUser.id === userId) {
+        const responseDto = await getUserInfo.invoke(userId);
+        if (responseDto !== null) {
+          response = {
+            status: status,
+            message: "User Info Retrieved Successfully",
+            data: responseDto
+          };
+        } else {
+          status = 422;
+          response = {
+            status: status,
+            message: `No such user found for ${userId}`,
+            data: null
+          };
+        }
       } else {
         status = 422;
         response = {
@@ -62,21 +73,26 @@ export class UserInfoController {
   }
 
   async patchUserInfo(
-    req: Request<{ userId: number }, any, UserInfoRequestDto>,
+    req: AuthRequest<{ userId: string }, any, UserInfoRequestDto>,
     res: Response
   ) {
     const patchUserInfo = container.resolve<PatchUserInfo>("PatchUserInfo");
     let response: Partial<ApiResponse<UserInfoResponseDto, any>> = {};
     let status: ApiResponseStatus = 200;
     try {
-      const userId = req.params.userId;
-      const responseDto = await patchUserInfo.invoke(userId, req.body);
-      if (responseDto !== null) {
-        response = {
-          status: status,
-          message: "User Info Updated Successfully",
-          data: responseDto
-        };
+      const authUser: AuthUser | undefined = req.user;
+      const userId = parseInt(req.params.userId);
+      if (authUser && authUser.id === userId) {
+        const responseDto = await patchUserInfo.invoke(userId, req.body);
+        if (responseDto !== null) {
+          response = {
+            status: status,
+            message: "User Info Updated Successfully",
+            data: responseDto
+          };
+        } else {
+          response = { status: status, message: "No Changes Applied" };
+        }
       } else {
         response = { status: status, message: "No Changes Applied" };
       }
@@ -88,18 +104,26 @@ export class UserInfoController {
     res.status(status).json(response);
   }
 
-  async deleteUserInfo(req: Request<{ userId: number }, any, any>, res: Response) {
+  async deleteUserInfo(req: AuthRequest<{ userId: string }, any, any>, res: Response) {
     const deleteUserInfo = container.resolve<DeleteUserInfo>("DeleteUserInfo");
     let response: Partial<ApiResponse<UserInfoResponseDto, any>> = {};
     let status: ApiResponseStatus = 200;
     try {
-      const userId = req.params.userId;
-      const deleted = await deleteUserInfo.invoke(userId);
-      if (deleted) {
-        response = {
-          status: status,
-          message: "User Info Deleted Successfully"
-        };
+      const authUser: AuthUser | undefined = req.user;
+      const userId = parseInt(req.params.userId);
+      if (authUser && authUser.id === userId) {
+        const deleted = await deleteUserInfo.invoke(userId);
+        if (deleted) {
+          response = {
+            status: status,
+            message: "User Info Deleted Successfully"
+          };
+        } else {
+          response = {
+            status: status,
+            message: "Unable To Delete User Info"
+          };
+        }
       } else {
         response = {
           status: status,

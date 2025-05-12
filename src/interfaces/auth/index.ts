@@ -3,5 +3,5 @@
  * Reuse as a whole or in part is prohibited without permission.
  */
 
-export { default as userRoutes } from './user/user.route';
-export { default as loginRoutes } from './login/login.route';
+export * from './utils/jwt';
+export * from './authenticator';

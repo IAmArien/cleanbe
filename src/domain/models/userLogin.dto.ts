@@ -1,0 +1,51 @@
+/**
+ * Property of Norman Palisoc (Senior Software Engineer)
+ * Reuse as a whole or in part is prohibited without permission.
+ */
+
+import { AuthUser, generateToken } from "@/interfaces/auth";
+import { UserCredentials } from "./userCredentials.model";
+import { UserInfo } from "./userInfo.model";
+
+export interface UserLoginRequestDto {
+  email: string;
+  password: string;
+}
+
+export interface UserLoginResponseDto {
+  accessToken: string;
+  credentialUserId: number;
+  userId: number;
+  email: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  birthDate: string;
+  sex: string;
+  age: number;
+  phoneNumber: string;
+}
+
+export function toUserLoginResponseDto(
+  credentials: UserCredentials,
+  info: UserInfo
+): UserLoginResponseDto {
+  const authUser: AuthUser = {
+    id: info.id,
+    email: info.email,
+    name: `${info.first_name} ${info.last_name}`
+  };
+  return {
+    accessToken: generateToken(authUser),
+    credentialUserId: credentials.id,
+    userId: info.id,
+    email: info.email,
+    firstName: info.first_name,
+    middleName: info.middle_name,
+    lastName: info.last_name,
+    birthDate: info.birth_date,
+    sex: info.sex,
+    age: info.age,
+    phoneNumber: info.phone_number
+  };
+}

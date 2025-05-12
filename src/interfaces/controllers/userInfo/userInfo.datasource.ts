@@ -26,7 +26,7 @@ export class UserInfoDataSourceImpl implements UserInfoDataSource {
     return this.repository.getUserInfo(userId);
   }
 
-  createUserInfo(userInfo: UserInfoRequestDto):Promise<UserInfoResponseDto> {
+  createUserInfo(userInfo: UserInfoRequestDto): Promise<UserInfoResponseDto> {
     return this.repository.createUserInfo(userInfo);
   }
 }

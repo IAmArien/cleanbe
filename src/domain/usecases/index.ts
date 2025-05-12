@@ -9,3 +9,4 @@ export * from './userInfo/createUserInfo';
 export * from './userInfo/getUserInfo';
 export * from './userInfo/patchUserInfo';
 export * from './userInfo/deleteUserInfo';
+export * from './userLogin/loginUser';

@@ -4,13 +4,14 @@
  */
 
 import { sequelize } from '@/frameworks';
-import { userRoutes } from '@/interfaces/routes';
+import { loginRoutes, userRoutes } from '@/interfaces/routes';
 import express from 'express';
 
 const app = express();
 app.use(express.json());
 
 app.use('/api/user', userRoutes);
+app.use('/api/auth', loginRoutes);
 
 app.listen(3000, async () => {
   try {

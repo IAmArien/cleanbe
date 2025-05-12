@@ -4,6 +4,7 @@
  */
 
 import { UserCredentials } from "@/domain";
+import bcrypt from "bcrypt";
 
 export interface UserCredentialsRequestDto {
   email: string;
@@ -15,13 +16,14 @@ export interface UserCredentialsResponseDto {
   email: string;
 }
 
-export function toUserCredentials(dto: UserCredentialsRequestDto): UserCredentials {
-  return {
+export async function toUserCredentials(dto: UserCredentialsRequestDto): Promise<UserCredentials> {
+  const hashedPassword = await bcrypt.hash(dto.password, 10)
+  return Promise.resolve({
     id: 0,
     user_email: dto.email,
-    user_password: dto.password,
+    user_password: hashedPassword,
     type: 'user'
-  };
+  });
 }
 
 export function toUserCredentialsResponseDto(

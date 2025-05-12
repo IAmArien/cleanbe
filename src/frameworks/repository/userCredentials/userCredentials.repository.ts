@@ -13,7 +13,7 @@ export class UserCredentialsRepository {
     return new Promise<UserCredentialsResponseDto>(
       async (resolve, reject) => {
         try {
-          const credentials = toUserCredentials(userCredentials);
+          const credentials = await toUserCredentials(userCredentials);
           const model = await UserCredentialsModel.create(credentials);
           const response = toUserCredentialsResponseDto(model);
           resolve(response);

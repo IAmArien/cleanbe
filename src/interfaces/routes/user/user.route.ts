@@ -3,6 +3,7 @@
  * Reuse as a whole or in part is prohibited without permission.
  */
 
+import { authenticator } from "@/interfaces/auth";
 import { UserCredentialsController, UserInfoController } from "@/interfaces/controllers";
 import { Router } from "express";
 import { container } from "tsyringe";
@@ -13,11 +14,15 @@ const credentialsController = container.resolve<UserCredentialsController>("User
 const infoController = container.resolve<UserInfoController>("UserInfoController");
 
 router.post("/credentials/create", credentialsController.createUserCredential);
-router.delete("/credentials/delete/:userId", credentialsController.deleteUserCredential);
+router.delete(
+  "/credentials/delete/:userId",
+  authenticator,
+  credentialsController.deleteUserCredential
+);
 
 router.post("/info/create", infoController.createUserInfo);
-router.delete("/info/delete/:userId", infoController.deleteUserInfo);
-router.patch("/info/patch/:userId", infoController.patchUserInfo);
-router.get("/info", infoController.getUserInfo);
+router.delete("/info/delete/:userId", authenticator, infoController.deleteUserInfo);
+router.patch("/info/patch/:userId", authenticator, infoController.patchUserInfo);
+router.get("/info", authenticator, infoController.getUserInfo);
 
 export default router;

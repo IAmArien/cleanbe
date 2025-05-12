@@ -24,11 +24,12 @@ UserCredentialsModel.init(
   {
     id: {
       type: DataTypes.INTEGER,
+      primaryKey: true,
       autoIncrement: true
     },
     user_email: {
       type: DataTypes.STRING,
-      primaryKey: true,
+      unique: true,
       allowNull: false 
     },
     user_password: {

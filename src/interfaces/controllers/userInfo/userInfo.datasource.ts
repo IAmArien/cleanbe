@@ -14,6 +14,10 @@ export class UserInfoDataSourceImpl implements UserInfoDataSource {
     @inject("UserInfoRepositoryFrameworks") private repository: UserInfoRepository
   ) {}
 
+  deleteUserInfo(userId: number): Promise<boolean> {
+    return this.repository.deleteUserInfo(userId);
+  }
+
   patchUserInfo(userId: number, userInfo: UserInfoRequestDto): Promise<UserInfoResponseDto | null> {
     return this.repository.patchUserInfo(userId, userInfo);
   }

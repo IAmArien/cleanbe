@@ -23,4 +23,8 @@ export class UserInfoRepository {
   ): Promise<UserInfoResponseDto | null> {
     return this.dataSource.patchUserInfo(userId, userInfo);
   }
+
+  deleteUserInfo(userId: number): Promise<boolean> {
+    return this.dataSource.deleteUserInfo(userId);
+  }
 }

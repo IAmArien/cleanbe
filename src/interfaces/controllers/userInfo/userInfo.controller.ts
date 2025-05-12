@@ -4,7 +4,7 @@
  */
 
 import { UserInfoRequestDto, UserInfoResponseDto } from "@/domain";
-import { CreateUserInfo, GetUserInfo, PatchUserInfo } from "@/domain/usecases";
+import { CreateUserInfo, DeleteUserInfo, GetUserInfo, PatchUserInfo } from "@/domain/usecases";
 import { handleSequelizeError } from "@/server/errorHandling";
 import { ApiResponse, ApiResponseStatus } from "@/types";
 import { Request, Response } from "express";
@@ -79,6 +79,32 @@ export class UserInfoController {
         };
       } else {
         response = { status: status, message: "No Changes Applied" };
+      }
+    } catch (error) {
+      const errorResponse = handleSequelizeError(error);
+      status = errorResponse.status;
+      response = errorResponse;
+    }
+    res.status(status).json(response);
+  }
+
+  async deleteUserInfo(req: Request<{ userId: number }, any, any>, res: Response) {
+    const deleteUserInfo = container.resolve<DeleteUserInfo>("DeleteUserInfo");
+    let response: Partial<ApiResponse<UserInfoResponseDto, any>> = {};
+    let status: ApiResponseStatus = 200;
+    try {
+      const userId = req.params.userId;
+      const deleted = await deleteUserInfo.invoke(userId);
+      if (deleted) {
+        response = {
+          status: status,
+          message: "User Info Deleted Successfully"
+        };
+      } else {
+        response = {
+          status: status,
+          message: "Unable To Delete User Info"
+        };
       }
     } catch (error) {
       const errorResponse = handleSequelizeError(error);

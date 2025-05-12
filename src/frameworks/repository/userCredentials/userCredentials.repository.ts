@@ -23,4 +23,24 @@ export class UserCredentialsRepository {
       }
     );
   }
+
+  deleteUserCredential(userId: number) {
+    return new Promise<boolean>(
+      async (resolve, reject) => {
+        try {
+          const findModel = await UserCredentialsModel.findByPk(userId);
+          if (findModel !== null) {
+            const rows = await UserCredentialsModel.destroy({
+              where: { id: userId }
+            });
+            resolve(rows > 0);
+          } else {
+            resolve(false);
+          }
+        } catch (error) {
+          reject(error);
+        }
+      }
+    );
+  }
 };

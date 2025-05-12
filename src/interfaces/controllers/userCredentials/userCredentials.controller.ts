@@ -4,7 +4,7 @@
  */
 
 import { UserCredentialsRequestDto, UserCredentialsResponseDto } from "@/domain";
-import { CreateUserCredential } from "@/domain/usecases";
+import { CreateUserCredential, DeleteUserCredential } from "@/domain/usecases";
 import { handleSequelizeError } from "@/server/errorHandling";
 import { ApiResponse, ApiResponseStatus } from "@/types";
 import { Request, Response } from "express";
@@ -24,6 +24,32 @@ export class UserCredentialsController {
         message: "User Credentials Created Successfully",
         data: responseDto
       };
+    } catch (error) {
+      const errorResponse = handleSequelizeError(error);
+      status = errorResponse.status;
+      response = errorResponse;
+    }
+    res.status(status).json(response);
+  }
+
+  async deleteUserCredential(req: Request<{ userId: number }, any, any>, res: Response) {
+    const deleteUserCredential = container.resolve<DeleteUserCredential>("DeleteUserCredential");
+    let response: Partial<ApiResponse<UserCredentialsResponseDto, any>> = {};
+    let status: ApiResponseStatus = 200;
+    try {
+      const userId = req.params.userId;
+      const deleted = await deleteUserCredential.invoke(userId);
+      if (deleted) {
+        response = {
+          status: status,
+          message: "User Credentials Deleted Successfully"
+        };
+      } else {
+        response = {
+          status: status,
+          message: "Unable To Delete User Credential"
+        };
+      }
     } catch (error) {
       const errorResponse = handleSequelizeError(error);
       status = errorResponse.status;

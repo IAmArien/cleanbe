@@ -94,4 +94,24 @@ export class UserInfoRepository {
       }
     );
   }
+
+  deleteUserInfo(userId: number) {
+    return new Promise<boolean>(
+      async (resolve, reject) => {
+        try {
+          const findModel = await UserInfoModel.findByPk(userId);
+          if (findModel !== null) {
+            const rows = await UserInfoModel.destroy({
+              where: { id: userId }
+            });
+            resolve(rows > 0);
+          } else {
+            resolve(false);
+          }
+        } catch (error) {
+          reject(error);
+        }
+      }
+    );
+  }
 }

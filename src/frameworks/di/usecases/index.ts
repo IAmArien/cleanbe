@@ -4,7 +4,7 @@
  */
 
 import { UserCredentialsDataSource, UserCredentialsRepository, UserInfoDataSource, UserInfoRepository } from "@/domain";
-import { CreateUserCredential, CreateUserInfo, GetUserInfo, PatchUserInfo } from "@/domain/usecases";
+import { CreateUserCredential, CreateUserInfo, DeleteUserCredential, DeleteUserInfo, GetUserInfo, PatchUserInfo } from "@/domain/usecases";
 import { container } from "tsyringe";
 
 container.register<UserCredentialsRepository>(
@@ -27,6 +27,18 @@ container.register<CreateUserCredential>(
         "UserCredentialsRepositoryDomain"
       );
       return new CreateUserCredential(repository);
+    }
+  }
+);
+
+container.register<DeleteUserCredential>(
+  "DeleteUserCredential",
+  {
+    useFactory: (container) => {
+      const repository = container.resolve<UserCredentialsRepository>(
+        "UserCredentialsRepositoryDomain"
+      );
+      return new DeleteUserCredential(repository);
     }
   }
 );
@@ -75,6 +87,18 @@ container.register<PatchUserInfo>(
         "UserInfoRepositoryDomain"
       );
       return new PatchUserInfo(repository);
+    }
+  }
+);
+
+container.register<DeleteUserInfo>(
+  "DeleteUserInfo",
+  {
+    useFactory: (container) => {
+      const repository = container.resolve<UserInfoRepository>(
+        "UserInfoRepositoryDomain"
+      );
+      return new DeleteUserInfo(repository);
     }
   }
 );

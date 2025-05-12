@@ -13,7 +13,10 @@ const credentialsController = container.resolve<UserCredentialsController>("User
 const infoController = container.resolve<UserInfoController>("UserInfoController");
 
 router.post("/credentials/create", credentialsController.createUserCredential);
+router.delete("/credentials/delete/:userId", credentialsController.deleteUserCredential);
+
 router.post("/info/create", infoController.createUserInfo);
+router.delete("/info/delete/:userId", infoController.deleteUserInfo);
 router.patch("/info/patch/:userId", infoController.patchUserInfo);
 router.get("/info", infoController.getUserInfo);
 

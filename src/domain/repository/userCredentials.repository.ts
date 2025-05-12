@@ -12,4 +12,8 @@ export class UserCredentialsRepository {
   createUserCredential(userCredential: UserCredentialsRequestDto): Promise<UserCredentialsResponseDto> {
     return this.dataSource.createUserCredential(userCredential);
   }
+
+  deleteUserCredential(userId: number): Promise<boolean> {
+    return this.dataSource.deleteUserCredential(userId);
+  }
 }

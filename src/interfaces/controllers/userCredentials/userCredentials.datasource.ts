@@ -14,6 +14,10 @@ export class UserCredentialsDataSourceImpl implements UserCredentialsDataSource 
     @inject("UserCredentialsRepositoryFrameworks") private repository: UserCredentialsRepository
   ) {}
 
+  deleteUserCredential(userId: number): Promise<boolean> {
+    return this.repository.deleteUserCredential(userId);
+  }
+
   createUserCredential(userCredential: UserCredentialsRequestDto): Promise<UserCredentialsResponseDto> {
     return this.repository.createUserCredential(userCredential);
   }

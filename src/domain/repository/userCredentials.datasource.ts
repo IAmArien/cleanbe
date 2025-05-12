@@ -9,4 +9,5 @@ export interface UserCredentialsDataSource {
   createUserCredential: (
     userCredential: UserCredentialsRequestDto
   ) => Promise<UserCredentialsResponseDto>;
+  deleteUserCredential(userId: number): Promise<boolean>;
 }

@@ -12,4 +12,5 @@ export interface UserInfoDataSource {
     userId: number,
     userInfo: UserInfoRequestDto
   ) => Promise<UserInfoResponseDto | null>;
+  deleteUserInfo(userId: number): Promise<boolean>;
 }

@@ -3,10 +3,9 @@
  * Reuse as a whole or in part is prohibited without permission.
  */
 
-import { UserInfoRepository, UserInfoRequestDto, UserInfoResponseDto } from "@/domain";
+import { UserInfoRepository, UserInfoRequestDto, UserInfoResponseDto } from '@/domain';
 
 export class CreateUserInfo {
-
   constructor(private repository: UserInfoRepository) {}
 
   invoke(userInfo: UserInfoRequestDto): Promise<UserInfoResponseDto> {

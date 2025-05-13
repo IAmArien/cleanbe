@@ -3,8 +3,8 @@
  * Reuse as a whole or in part is prohibited without permission.
  */
 
-import { sequelize } from "@/frameworks";
-import { DataTypes, Model } from "sequelize";
+import { sequelize } from '@/frameworks';
+import { DataTypes, Model } from 'sequelize';
 
 export interface UserInfo {
   id: number;
@@ -35,45 +35,45 @@ UserInfoModel.init(
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     email: {
       type: DataTypes.STRING,
       unique: true,
-      allowNull: false
+      allowNull: false,
     },
     first_name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     middle_name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     last_name: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     birth_date: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: false,
     },
     sex: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     age: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
     },
     phone_number: {
       type: DataTypes.STRING,
-      allowNull: false
-    }
+      allowNull: false,
+    },
   },
   {
     sequelize,
-    tableName: "user_info",
-    timestamps: false
+    tableName: 'user_info',
+    timestamps: false,
   }
 );

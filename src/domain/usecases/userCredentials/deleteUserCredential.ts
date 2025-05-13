@@ -3,10 +3,9 @@
  * Reuse as a whole or in part is prohibited without permission.
  */
 
-import { UserCredentialsRepository } from "@/domain/repository/userCredentials.repository";
+import { UserCredentialsRepository } from '@/domain/repository/userCredentials.repository';
 
 export class DeleteUserCredential {
-
   constructor(private repository: UserCredentialsRepository) {}
 
   invoke(userId: number): Promise<boolean> {

@@ -3,7 +3,7 @@
  * Reuse as a whole or in part is prohibited without permission.
  */
 
-import { UserInfo } from "./userInfo.model";
+import { UserInfo } from './userInfo.model';
 
 export interface UserLogin extends UserInfo {
   credential_user_id: number;

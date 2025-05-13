@@ -15,7 +15,7 @@ export type INTERNAL_SERVER_ERROR = 500;
 export type BAD_GATEWAY = 502;
 export type SERVICE_UNAVAILABLE = 503;
 
-export type ApiResponseStatus = 
+export type ApiResponseStatus =
   | OK
   | CREATED
   | BAD_REQUEST

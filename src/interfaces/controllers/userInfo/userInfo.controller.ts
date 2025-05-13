@@ -3,27 +3,26 @@
  * Reuse as a whole or in part is prohibited without permission.
  */
 
-import { UserInfoRequestDto, UserInfoResponseDto } from "@/domain";
-import { CreateUserInfo, DeleteUserInfo, GetUserInfo, PatchUserInfo } from "@/domain/usecases";
-import { AuthRequest, AuthUser } from "@/interfaces/auth";
-import { handleSequelizeError } from "@/server/errorHandling";
-import { ApiResponse, ApiResponseStatus } from "@/types";
-import { Request, Response } from "express";
-import { container, injectable } from "tsyringe";
+import { UserInfoRequestDto, UserInfoResponseDto } from '@/domain';
+import { CreateUserInfo, DeleteUserInfo, GetUserInfo, PatchUserInfo } from '@/domain/usecases';
+import { AuthRequest, AuthUser } from '@/interfaces/auth';
+import { handleSequelizeError } from '@/server/errorHandling';
+import { ApiResponse, ApiResponseStatus } from '@/types';
+import { Request, Response } from 'express';
+import { container, injectable } from 'tsyringe';
 
 @injectable()
 export class UserInfoController {
-
   async createUserInfo(req: Request<any, any, UserInfoRequestDto>, res: Response) {
-    const createUserInfo = container.resolve<CreateUserInfo>("CreateUserInfo");
+    const createUserInfo = container.resolve<CreateUserInfo>('CreateUserInfo');
     let response: Partial<ApiResponse<UserInfoResponseDto, any>> = {};
     let status: ApiResponseStatus = 201;
     try {
       const responseDto = await createUserInfo.invoke(req.body);
       response = {
         status: status,
-        message: "User Info Created Successfully",
-        data: responseDto
+        message: 'User Info Created Successfully',
+        data: responseDto,
       };
     } catch (error) {
       const errorResponse = handleSequelizeError(error);
@@ -34,7 +33,7 @@ export class UserInfoController {
   }
 
   async getUserInfo(req: AuthRequest<any, any, any, { userId: string }>, res: Response) {
-    const getUserInfo = container.resolve<GetUserInfo>("GetUserInfo");
+    const getUserInfo = container.resolve<GetUserInfo>('GetUserInfo');
     let response: Partial<ApiResponse<UserInfoResponseDto, any>> = {};
     let status: ApiResponseStatus = 200;
     try {
@@ -45,15 +44,15 @@ export class UserInfoController {
         if (responseDto !== null) {
           response = {
             status: status,
-            message: "User Info Retrieved Successfully",
-            data: responseDto
+            message: 'User Info Retrieved Successfully',
+            data: responseDto,
           };
         } else {
           status = 422;
           response = {
             status: status,
             message: `No such user found for ${userId}`,
-            data: null
+            data: null,
           };
         }
       } else {
@@ -61,7 +60,7 @@ export class UserInfoController {
         response = {
           status: status,
           message: `No such user found for ${userId}`,
-          data: null
+          data: null,
         };
       }
     } catch (error) {
@@ -76,7 +75,7 @@ export class UserInfoController {
     req: AuthRequest<{ userId: string }, any, UserInfoRequestDto>,
     res: Response
   ) {
-    const patchUserInfo = container.resolve<PatchUserInfo>("PatchUserInfo");
+    const patchUserInfo = container.resolve<PatchUserInfo>('PatchUserInfo');
     let response: Partial<ApiResponse<UserInfoResponseDto, any>> = {};
     let status: ApiResponseStatus = 200;
     try {
@@ -87,14 +86,14 @@ export class UserInfoController {
         if (responseDto !== null) {
           response = {
             status: status,
-            message: "User Info Updated Successfully",
-            data: responseDto
+            message: 'User Info Updated Successfully',
+            data: responseDto,
           };
         } else {
-          response = { status: status, message: "No Changes Applied" };
+          response = { status: status, message: 'No Changes Applied' };
         }
       } else {
-        response = { status: status, message: "No Changes Applied" };
+        response = { status: status, message: 'No Changes Applied' };
       }
     } catch (error) {
       const errorResponse = handleSequelizeError(error);
@@ -105,7 +104,7 @@ export class UserInfoController {
   }
 
   async deleteUserInfo(req: AuthRequest<{ userId: string }, any, any>, res: Response) {
-    const deleteUserInfo = container.resolve<DeleteUserInfo>("DeleteUserInfo");
+    const deleteUserInfo = container.resolve<DeleteUserInfo>('DeleteUserInfo');
     let response: Partial<ApiResponse<UserInfoResponseDto, any>> = {};
     let status: ApiResponseStatus = 200;
     try {
@@ -116,18 +115,18 @@ export class UserInfoController {
         if (deleted) {
           response = {
             status: status,
-            message: "User Info Deleted Successfully"
+            message: 'User Info Deleted Successfully',
           };
         } else {
           response = {
             status: status,
-            message: "Unable To Delete User Info"
+            message: 'Unable To Delete User Info',
           };
         }
       } else {
         response = {
           status: status,
-          message: "Unable To Delete User Info"
+          message: 'Unable To Delete User Info',
         };
       }
     } catch (error) {

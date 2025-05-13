@@ -3,9 +3,9 @@
  * Reuse as a whole or in part is prohibited without permission.
  */
 
-import { AuthUser, generateRefreshToken, generateToken } from "@/interfaces/auth";
-import { UserCredentials } from "./userCredentials.model";
-import { UserInfo } from "./userInfo.model";
+import { AuthUser, generateRefreshToken, generateToken } from '@/interfaces/auth';
+import { UserCredentials } from './userCredentials.model';
+import { UserInfo } from './userInfo.model';
 
 export interface UserLoginRequestDto {
   email: string;
@@ -50,7 +50,7 @@ export function toUserLoginResponseDto(
   const authUser: AuthUser = {
     id: info.id,
     email: info.email,
-    name: `${info.first_name} ${info.last_name}`
+    name: `${info.first_name} ${info.last_name}`,
   };
   return {
     refreshToken: generateRefreshToken(authUser),
@@ -65,7 +65,7 @@ export function toUserLoginResponseDto(
       birthDate: info.birth_date,
       sex: info.sex,
       age: info.age,
-      phoneNumber: info.phone_number
-    }
+      phoneNumber: info.phone_number,
+    },
   };
 }

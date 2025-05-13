@@ -3,7 +3,7 @@
  * Reuse as a whole or in part is prohibited without permission.
  */
 
-import { DataTypes, Model } from "sequelize";
+import { DataTypes, Model } from 'sequelize';
 import { sequelize } from '@/frameworks';
 
 export interface UserCredentials {
@@ -25,25 +25,25 @@ UserCredentialsModel.init(
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true
+      autoIncrement: true,
     },
     user_email: {
       type: DataTypes.STRING,
       unique: true,
-      allowNull: false 
+      allowNull: false,
     },
     user_password: {
       type: DataTypes.STRING,
-      allowNull: false 
+      allowNull: false,
     },
     type: {
       type: DataTypes.STRING,
-      allowNull: false 
-    }
+      allowNull: false,
+    },
   },
   {
     sequelize,
     tableName: 'user_credentials',
-    timestamps: false
+    timestamps: false,
   }
 );

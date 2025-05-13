@@ -3,13 +3,18 @@
  * Reuse as a whole or in part is prohibited without permission.
  */
 
-import { UserCredentialsDataSource, UserCredentialsRequestDto, UserCredentialsResponseDto } from "@/domain";
+import {
+  UserCredentialsDataSource,
+  UserCredentialsRequestDto,
+  UserCredentialsResponseDto,
+} from '@/domain';
 
 export class UserCredentialsRepository {
-
   constructor(private dataSource: UserCredentialsDataSource) {}
 
-  createUserCredential(userCredential: UserCredentialsRequestDto): Promise<UserCredentialsResponseDto> {
+  createUserCredential(
+    userCredential: UserCredentialsRequestDto
+  ): Promise<UserCredentialsResponseDto> {
     return this.dataSource.createUserCredential(userCredential);
   }
 

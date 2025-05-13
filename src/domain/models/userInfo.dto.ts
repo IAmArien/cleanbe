@@ -3,7 +3,7 @@
  * Reuse as a whole or in part is prohibited without permission.
  */
 
-import { UserInfo } from "@/domain";
+import { UserInfo } from '@/domain';
 
 export interface UserInfoRequestDto {
   email: string;
@@ -38,8 +38,8 @@ export function toUserInfo(dto: UserInfoRequestDto): UserInfo {
     birth_date: dto.birthDate,
     sex: dto.sex,
     age: dto.age,
-    phone_number: dto.phoneNumber
-  }
+    phone_number: dto.phoneNumber,
+  };
 }
 
 export function toUserInfoResponseDto(userInfo: UserInfo): UserInfoResponseDto {
@@ -52,6 +52,6 @@ export function toUserInfoResponseDto(userInfo: UserInfo): UserInfoResponseDto {
     birthDate: userInfo.birth_date,
     sex: userInfo.sex,
     age: userInfo.age,
-    phoneNumber:userInfo.phone_number
-  }
+    phoneNumber: userInfo.phone_number,
+  };
 }

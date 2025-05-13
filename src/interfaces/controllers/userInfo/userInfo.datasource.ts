@@ -3,16 +3,13 @@
  * Reuse as a whole or in part is prohibited without permission.
  */
 
-import { UserInfoDataSource, UserInfoRequestDto, UserInfoResponseDto } from "@/domain";
-import { UserInfoRepository } from "@/frameworks/repository";
-import { inject, injectable } from "tsyringe";
+import { UserInfoDataSource, UserInfoRequestDto, UserInfoResponseDto } from '@/domain';
+import { UserInfoRepository } from '@/frameworks/repository';
+import { inject, injectable } from 'tsyringe';
 
 @injectable()
 export class UserInfoDataSourceImpl implements UserInfoDataSource {
-
-  constructor(
-    @inject("UserInfoRepositoryFrameworks") private repository: UserInfoRepository
-  ) {}
+  constructor(@inject('UserInfoRepositoryFrameworks') private repository: UserInfoRepository) {}
 
   deleteUserInfo(userId: number): Promise<boolean> {
     return this.repository.deleteUserInfo(userId);

@@ -3,8 +3,8 @@
  * Reuse as a whole or in part is prohibited without permission.
  */
 
-import "reflect-metadata";
-import "./frameworks/di/container";;
-import app from "@/server";
+import 'reflect-metadata';
+import './frameworks/di/container';
+import app from '@/server';
 
 export default app;

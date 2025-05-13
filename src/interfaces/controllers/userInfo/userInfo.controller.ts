@@ -43,13 +43,13 @@ export class UserInfoController {
     res.status(status).json(response);
   }
 
-  async getUserInfo(req: AuthRequest<any, any, any, { userId: string }>, res: Response) {
+  async getUserInfo(req: AuthRequest<{ userId: string }, any, any>, res: Response) {
     const getUserInfo = container.resolve<GetUserInfo>('GetUserInfo');
     let response: Partial<ApiResponse<UserInfoResponseDto, any>> = {};
     let status: ApiResponseStatus = 200;
     try {
       const authUser: AuthUser | undefined = req.user;
-      const userId = parseInt(req.query.userId);
+      const userId = parseInt(req.params.userId);
       if (authUser && authUser.id === userId) {
         const responseDto = await getUserInfo.invoke(userId);
         if (responseDto !== null) {

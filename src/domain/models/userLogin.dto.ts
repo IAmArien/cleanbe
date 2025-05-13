@@ -3,7 +3,7 @@
  * Reuse as a whole or in part is prohibited without permission.
  */
 
-import { AuthUser, generateToken } from "@/interfaces/auth";
+import { AuthUser, generateRefreshToken, generateToken } from "@/interfaces/auth";
 import { UserCredentials } from "./userCredentials.model";
 import { UserInfo } from "./userInfo.model";
 
@@ -14,6 +14,7 @@ export interface UserLoginRequestDto {
 
 export interface UserLoginResponseDto {
   accessToken: string;
+  refreshToken: string;
   credentialUserId: number;
   userId: number;
   email: string;
@@ -26,6 +27,18 @@ export interface UserLoginResponseDto {
   phoneNumber: string;
 }
 
+export interface TokenRefreshRequestDto {
+  credentialUserId: number;
+  userId: number;
+  email: string;
+  refreshToken: string;
+}
+
+export interface TokenRefreshResponseDto {
+  accessToken: string;
+  refreshToken: string;
+}
+
 export function toUserLoginResponseDto(
   credentials: UserCredentials,
   info: UserInfo
@@ -36,6 +49,7 @@ export function toUserLoginResponseDto(
     name: `${info.first_name} ${info.last_name}`
   };
   return {
+    refreshToken: generateRefreshToken(authUser),
     accessToken: generateToken(authUser),
     credentialUserId: credentials.id,
     userId: info.id,

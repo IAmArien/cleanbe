@@ -4,7 +4,7 @@
  */
 
 import { UserCredentialsDataSource, UserCredentialsRepository, UserInfoDataSource, UserInfoRepository, UserLoginDataSource, UserLoginRepository } from "@/domain";
-import { CreateUserCredential, CreateUserInfo, DeleteUserCredential, DeleteUserInfo, GetUserInfo, LoginUser, PatchUserInfo } from "@/domain/usecases";
+import { CreateUserCredential, CreateUserInfo, DeleteUserCredential, DeleteUserInfo, GetUserInfo, LoginUser, PatchUserInfo, RefreshToken } from "@/domain/usecases";
 import { container } from "tsyringe";
 
 container.register<UserCredentialsRepository>(
@@ -123,6 +123,18 @@ container.register<LoginUser>(
         "UserLoginRepositoryDomain"
       );
       return new LoginUser(repository);
+    }
+  }
+);
+
+container.register<RefreshToken>(
+  "RefreshToken",
+  {
+    useFactory: (container) => {
+      const repository = container.resolve<UserLoginRepository>(
+        "UserLoginRepositoryDomain"
+      );
+      return new RefreshToken(repository);
     }
   }
 );

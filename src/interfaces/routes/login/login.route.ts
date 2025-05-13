@@ -12,5 +12,6 @@ const router = Router();
 const loginController = container.resolve<UserLoginController>("UserLoginController");
 
 router.post("/login", loginController.login);
+router.post("/refresh", loginController.refreshToken);
 
 export default router;

@@ -5,6 +5,7 @@
 
 import { UserCredentialsRequestDto, UserCredentialsResponseDto } from "@/domain";
 import { CreateUserCredential, DeleteUserCredential } from "@/domain/usecases";
+import { AuthRequest, AuthUser } from "@/interfaces/auth";
 import { handleSequelizeError } from "@/server/errorHandling";
 import { ApiResponse, ApiResponseStatus } from "@/types";
 import { Request, Response } from "express";
@@ -32,19 +33,28 @@ export class UserCredentialsController {
     res.status(status).json(response);
   }
 
-  async deleteUserCredential(req: Request<{ userId: number }, any, any>, res: Response) {
+  async deleteUserCredential(req: AuthRequest<{ userId: string }, any, any>, res: Response) {
     const deleteUserCredential = container.resolve<DeleteUserCredential>("DeleteUserCredential");
     let response: Partial<ApiResponse<UserCredentialsResponseDto, any>> = {};
     let status: ApiResponseStatus = 200;
     try {
-      const userId = req.params.userId;
-      const deleted = await deleteUserCredential.invoke(userId);
-      if (deleted) {
-        response = {
-          status: status,
-          message: "User Credentials Deleted Successfully"
-        };
+      const authUser: AuthUser | undefined = req.user;
+      const userId = parseInt(req.params.userId);
+      if (authUser && authUser.id === userId) {
+        const deleted = await deleteUserCredential.invoke(userId);
+        if (deleted) {
+          response = {
+            status: status,
+            message: "User Credentials Deleted Successfully"
+          };
+        } else {
+          response = {
+            status: status,
+            message: "Unable To Delete User Credential"
+          };
+        }
       } else {
+        status = 400;
         response = {
           status: status,
           message: "Unable To Delete User Credential"

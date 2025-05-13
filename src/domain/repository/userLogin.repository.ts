@@ -3,7 +3,7 @@
  * Reuse as a whole or in part is prohibited without permission.
  */
 
-import { UserLoginDataSource, UserLoginRequestDto, UserLoginResponseDto } from "@/domain";
+import { TokenRefreshRequestDto, TokenRefreshResponseDto, UserLoginDataSource, UserLoginRequestDto, UserLoginResponseDto } from "@/domain";
 
 export class UserLoginRepository {
 
@@ -11,5 +11,9 @@ export class UserLoginRepository {
 
   login(userLogin: UserLoginRequestDto): Promise<UserLoginResponseDto> {
     return this.dataSource.login(userLogin);
+  }
+
+  refreshToken(token: TokenRefreshRequestDto): Promise<TokenRefreshResponseDto> {
+    return this.dataSource.refreshToken(token);
   }
 };

@@ -3,8 +3,8 @@
  * Reuse as a whole or in part is prohibited without permission.
  */
 
-import { UserLoginRequestDto, UserLoginResponseDto } from "@/domain";
-import { LoginUser } from "@/domain/usecases";
+import { TokenRefreshRequestDto, TokenRefreshResponseDto, UserLoginRequestDto, UserLoginResponseDto } from "@/domain";
+import { LoginUser, RefreshToken } from "@/domain/usecases";
 import { handleSequelizeError } from "@/server/errorHandling";
 import { ApiResponse, ApiResponseStatus } from "@/types";
 import { Request, Response } from "express";
@@ -22,6 +22,25 @@ export class UserLoginController {
       response = {
         status: status,
         message: "User Authenticated Successfully",
+        data: responseDto
+      };
+    } catch (error) {
+      const errorResponse = handleSequelizeError(error);
+      status = errorResponse.status;
+      response = errorResponse;
+    }
+    res.status(status).json(response);
+  }
+
+  async refreshToken(req: Request<any, any, TokenRefreshRequestDto>, res: Response) {
+    const refreshToken = container.resolve<RefreshToken>("RefreshToken");
+    let response: Partial<ApiResponse<TokenRefreshResponseDto, any>> = {};
+    let status: ApiResponseStatus = 200;
+    try {
+      const responseDto = await refreshToken.invoke(req.body);
+      response = {
+        status: status,
+        message: "Token Refreshed Successfully",
         data: responseDto
       };
     } catch (error) {

@@ -8,12 +8,10 @@ import {
   UserCredentialsRepository,
   UserInfoRepository,
   UserAuthRepository,
-} from '@/frameworks/repository';
-import {
   UserCredentialsDataSourceImpl,
   UserInfoDataSourceImpl,
   UserAuthDataSourceImpl,
-} from '@/interfaces/controllers';
+} from '@/frameworks/repository';
 import { container } from 'tsyringe';
 
 container.register<UserCredentialsRepository>('UserCredentialsRepositoryFrameworks', {

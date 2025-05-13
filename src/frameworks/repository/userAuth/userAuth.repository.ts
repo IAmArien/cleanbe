@@ -20,6 +20,7 @@ import {
   generateToken,
   verifyRefreshToken,
 } from '@/interfaces/auth';
+import { BLACKLISTED_TOKEN_KEY, RedisService } from '@/lib';
 
 @injectable()
 export class UserAuthRepository {
@@ -58,6 +59,7 @@ export class UserAuthRepository {
 
   refreshToken(token: TokenRefreshRequestDto) {
     return new Promise<TokenRefreshResponseDto>(async (resolve, reject) => {
+      const redis = new RedisService();
       try {
         const infoModel = await UserInfoModel.findOne({
           where: {
@@ -86,6 +88,12 @@ export class UserAuthRepository {
               refreshToken: newRefreshToken,
               accessToken: newAccessToken,
             };
+            const tokenExpiration: number = 60 * 60 * 24 * 7;
+            await redis.set({
+              key: `${BLACKLISTED_TOKEN_KEY}${refreshToken}`,
+              value: 'blacklisted',
+              exp: tokenExpiration,
+            });
             resolve(response);
           } else {
             reject(Error('Invalid User Requests'));

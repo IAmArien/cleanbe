@@ -6,10 +6,13 @@
 import {
   toUserInfo,
   toUserInfoResponseDto,
+  toUserListInfoResponseDto,
   UserInfo,
   UserInfoModel,
   UserInfoRequestDto,
   UserInfoResponseDto,
+  UserListInfoRequestDto,
+  UserListInfoResponseDto,
 } from '@/domain';
 import { injectable } from 'tsyringe';
 
@@ -38,6 +41,25 @@ export class UserInfoRepository {
         } else {
           resolve(null);
         }
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  getUserList(params: UserListInfoRequestDto) {
+    return new Promise<UserListInfoResponseDto>(async (resolve, reject) => {
+      try {
+        const page = parseInt(params.page?.toString() ?? '1');
+        const pageSize = parseInt(params.pageSize?.toString() ?? '10');
+        const sortBy = params.sortBy ?? 'DESC';
+        const { count, rows: userListModel } = await UserInfoModel.findAndCountAll({
+          limit: pageSize,
+          offset: (page - 1) * pageSize,
+          order: [['id', sortBy]],
+        });
+        const response = toUserListInfoResponseDto(params, userListModel, count);
+        resolve(response);
       } catch (error) {
         reject(error);
       }

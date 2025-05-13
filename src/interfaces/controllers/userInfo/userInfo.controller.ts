@@ -3,8 +3,19 @@
  * Reuse as a whole or in part is prohibited without permission.
  */
 
-import { UserInfoRequestDto, UserInfoResponseDto } from '@/domain';
-import { CreateUserInfo, DeleteUserInfo, GetUserInfo, PatchUserInfo } from '@/domain/usecases';
+import {
+  UserInfoRequestDto,
+  UserInfoResponseDto,
+  UserListInfoRequestDto,
+  UserListInfoResponseDto,
+} from '@/domain';
+import {
+  CreateUserInfo,
+  DeleteUserInfo,
+  GetUserInfo,
+  GetUserList,
+  PatchUserInfo,
+} from '@/domain/usecases';
 import { AuthRequest, AuthUser } from '@/interfaces/auth';
 import { handleSequelizeError } from '@/server/errorHandling';
 import { ApiResponse, ApiResponseStatus } from '@/types';
@@ -61,6 +72,34 @@ export class UserInfoController {
           status: status,
           message: `No such user found for ${userId}`,
           data: null,
+        };
+      }
+    } catch (error) {
+      const errorResponse = handleSequelizeError(error);
+      status = errorResponse.status;
+      response = errorResponse;
+    }
+    res.status(status).json(response);
+  }
+
+  async getUserList(req: AuthRequest<any, any, any, UserListInfoRequestDto>, res: Response) {
+    const getUserList = container.resolve<GetUserList>('GetUserList');
+    let response: Partial<ApiResponse<UserListInfoResponseDto, any>> = {};
+    let status: ApiResponseStatus = 200;
+    try {
+      const authUser: AuthUser | undefined = req.user;
+      if (authUser !== undefined) {
+        const responseDto = await getUserList.invoke(req.query);
+        response = {
+          status: status,
+          message: 'User Info List Retrieved Successfully',
+          data: responseDto,
+        };
+      } else {
+        status = 401;
+        response = {
+          status: status,
+          message: 'Unauthorized Request',
         };
       }
     } catch (error) {

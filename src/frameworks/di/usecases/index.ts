@@ -17,6 +17,7 @@ import {
   DeleteUserCredential,
   DeleteUserInfo,
   GetUserInfo,
+  GetUserList,
   LoginUser,
   PatchUserInfo,
   RefreshToken,
@@ -68,6 +69,13 @@ container.register<GetUserInfo>('GetUserInfo', {
   useFactory: (container) => {
     const repository = container.resolve<UserInfoRepository>('UserInfoRepositoryDomain');
     return new GetUserInfo(repository);
+  },
+});
+
+container.register<GetUserList>('GetUserList', {
+  useFactory: (container) => {
+    const repository = container.resolve<UserInfoRepository>('UserInfoRepositoryDomain');
+    return new GetUserList(repository);
   },
 });
 

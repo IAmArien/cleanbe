@@ -28,6 +28,17 @@ export interface UserInfoResponseDto {
   phoneNumber: string;
 }
 
+export interface UserListInfoRequestDto {
+  page?: number;
+  pageSize?: number;
+  sortBy?: 'ASC' | 'DESC';
+}
+
+export interface UserListInfoResponseDto extends UserListInfoRequestDto {
+  totalPages?: number;
+  data: UserInfoResponseDto[];
+}
+
 export function toUserInfo(dto: UserInfoRequestDto): UserInfo {
   return {
     id: 0,
@@ -53,5 +64,21 @@ export function toUserInfoResponseDto(userInfo: UserInfo): UserInfoResponseDto {
     sex: userInfo.sex,
     age: userInfo.age,
     phoneNumber: userInfo.phone_number,
+  };
+}
+
+export function toUserListInfoResponseDto(
+  request: UserListInfoRequestDto,
+  userInfo: UserInfo[],
+  count: number
+): UserListInfoResponseDto {
+  const page = parseInt(request.page?.toString() ?? '1');
+  const pageSize = parseInt(request.pageSize?.toString() ?? '10');
+  return {
+    page: page,
+    pageSize: pageSize,
+    sortBy: request.sortBy ?? 'DESC',
+    totalPages: Math.ceil(count / pageSize),
+    data: userInfo.map((v) => toUserInfoResponseDto(v)),
   };
 }

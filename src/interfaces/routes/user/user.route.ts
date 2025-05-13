@@ -26,5 +26,6 @@ router.post('/info/create', infoController.createUserInfo);
 router.delete('/info/delete/:userId', tokenAuthenticator, infoController.deleteUserInfo);
 router.patch('/info/patch/:userId', tokenAuthenticator, infoController.patchUserInfo);
 router.get('/info', tokenAuthenticator, infoController.getUserInfo);
+router.get('/list', tokenAuthenticator, infoController.getUserList);
 
 export default router;

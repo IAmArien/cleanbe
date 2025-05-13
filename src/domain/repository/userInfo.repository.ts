@@ -3,7 +3,13 @@
  * Reuse as a whole or in part is prohibited without permission.
  */
 
-import { UserInfoDataSource, UserInfoRequestDto, UserInfoResponseDto } from '@/domain';
+import {
+  UserInfoDataSource,
+  UserInfoRequestDto,
+  UserInfoResponseDto,
+  UserListInfoRequestDto,
+  UserListInfoResponseDto,
+} from '@/domain';
 
 export class UserInfoRepository {
   constructor(private dataSource: UserInfoDataSource) {}
@@ -14,6 +20,10 @@ export class UserInfoRepository {
 
   getUserInfo(userId: number): Promise<UserInfoResponseDto | null> {
     return this.dataSource.getUserInfo(userId);
+  }
+
+  getUserList(params: UserListInfoRequestDto): Promise<UserListInfoResponseDto> {
+    return this.dataSource.getUserList(params);
   }
 
   patchUserInfo(userId: number, userInfo: UserInfoRequestDto): Promise<UserInfoResponseDto | null> {

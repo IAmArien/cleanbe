@@ -12,9 +12,7 @@ export interface UserLoginRequestDto {
   password: string;
 }
 
-export interface UserLoginResponseDto {
-  accessToken: string;
-  refreshToken: string;
+export interface UserLoginInfoResponseDto {
   credentialUserId: number;
   userId: number;
   email: string;
@@ -25,6 +23,12 @@ export interface UserLoginResponseDto {
   sex: string;
   age: number;
   phoneNumber: string;
+}
+
+export interface UserLoginResponseDto {
+  accessToken: string;
+  refreshToken: string;
+  user: UserLoginInfoResponseDto;
 }
 
 export interface TokenRefreshRequestDto {
@@ -51,15 +55,17 @@ export function toUserLoginResponseDto(
   return {
     refreshToken: generateRefreshToken(authUser),
     accessToken: generateToken(authUser),
-    credentialUserId: credentials.id,
-    userId: info.id,
-    email: info.email,
-    firstName: info.first_name,
-    middleName: info.middle_name,
-    lastName: info.last_name,
-    birthDate: info.birth_date,
-    sex: info.sex,
-    age: info.age,
-    phoneNumber: info.phone_number
+    user: {
+      credentialUserId: credentials.id,
+      userId: info.id,
+      email: info.email,
+      firstName: info.first_name,
+      middleName: info.middle_name,
+      lastName: info.last_name,
+      birthDate: info.birth_date,
+      sex: info.sex,
+      age: info.age,
+      phoneNumber: info.phone_number
+    }
   };
 }

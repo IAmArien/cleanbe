@@ -3,12 +3,12 @@
  * Reuse as a whole or in part is prohibited without permission.
  */
 
-import { UserLoginRequestDto, UserLoginResponseDto } from "@/domain/models/userLogin.dto";
-import { UserLoginRepository } from "@/domain/repository/userLogin.repository";
+import { UserLoginRequestDto, UserLoginResponseDto } from "@/domain/models/userAuth.dto";
+import { UserAuthRepository } from "@/domain/repository/userAuth.repository";
 
 export class LoginUser {
 
-  constructor(private repository: UserLoginRepository) {}
+  constructor(private repository: UserAuthRepository) {}
 
   invoke(userLogin: UserLoginRequestDto): Promise<UserLoginResponseDto> {
     return this.repository.login(userLogin);

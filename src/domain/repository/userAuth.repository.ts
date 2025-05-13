@@ -3,11 +3,11 @@
  * Reuse as a whole or in part is prohibited without permission.
  */
 
-import { TokenRefreshRequestDto, TokenRefreshResponseDto, UserLoginDataSource, UserLoginRequestDto, UserLoginResponseDto } from "@/domain";
+import { TokenRefreshRequestDto, TokenRefreshResponseDto, UserAuthDataSource, UserLoginRequestDto, UserLoginResponseDto } from "@/domain";
 
-export class UserLoginRepository {
+export class UserAuthRepository {
 
-  constructor(private dataSource: UserLoginDataSource) {}
+  constructor(private dataSource: UserAuthDataSource) {}
 
   login(userLogin: UserLoginRequestDto): Promise<UserLoginResponseDto> {
     return this.dataSource.login(userLogin);

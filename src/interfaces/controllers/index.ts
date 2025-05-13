@@ -7,5 +7,5 @@ export * from './userCredentials/userCredentials.controller';
 export * from './userCredentials/userCredentials.datasource';
 export * from './userInfo/userInfo.datasource';
 export * from './userInfo/userInfo.controller';
-export * from './userLogin/userLogin.datasource';
-export * from './userLogin/userLogin.controller';
+export * from './userAuth/userAuth.datasource';
+export * from './userAuth/userAuth.controller';

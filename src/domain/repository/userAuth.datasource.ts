@@ -5,7 +5,7 @@
 
 import { TokenRefreshRequestDto, TokenRefreshResponseDto, UserLoginRequestDto, UserLoginResponseDto } from "@/domain";
 
-export interface UserLoginDataSource {
+export interface UserAuthDataSource {
   login: (userLogin: UserLoginRequestDto) => Promise<UserLoginResponseDto>
   refreshToken: (token: TokenRefreshRequestDto) => Promise<TokenRefreshResponseDto>;
 }

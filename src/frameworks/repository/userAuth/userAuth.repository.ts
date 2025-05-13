@@ -9,7 +9,7 @@ import bcrypt from "bcrypt";
 import { AuthUser, generateRefreshToken, generateToken, verifyRefreshToken } from "@/interfaces/auth";
 
 @injectable()
-export class UserLoginRepository {
+export class UserAuthRepository {
 
   login(userLogin: UserLoginRequestDto) {
     return new Promise<UserLoginResponseDto>(

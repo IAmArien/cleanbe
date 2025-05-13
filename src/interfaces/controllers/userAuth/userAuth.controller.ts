@@ -11,7 +11,7 @@ import { Request, Response } from "express";
 import { container, injectable } from "tsyringe";
 
 @injectable()
-export class UserLoginController {
+export class UserAuthController {
 
   async login(req: Request<any, any, UserLoginRequestDto>, res: Response) {
     const loginUser = container.resolve<LoginUser>("LoginUser");

@@ -3,15 +3,15 @@
  * Reuse as a whole or in part is prohibited without permission.
  */
 
-import { TokenRefreshRequestDto, TokenRefreshResponseDto, UserLoginDataSource, UserLoginRequestDto, UserLoginResponseDto } from "@/domain";
-import { UserLoginRepository } from "@/frameworks/repository";
+import { TokenRefreshRequestDto, TokenRefreshResponseDto, UserAuthDataSource, UserLoginRequestDto, UserLoginResponseDto } from "@/domain";
+import { UserAuthRepository } from "@/frameworks/repository";
 import { inject, injectable } from "tsyringe";
 
 @injectable()
-export class UserLoginDataSourceImpl implements UserLoginDataSource {
+export class UserAuthDataSourceImpl implements UserAuthDataSource {
 
   constructor(
-    @inject("UserLoginRepositoryFrameworks") private repository: UserLoginRepository
+    @inject("UserAuthRepositoryFrameworks") private repository: UserAuthRepository
   ) {}
 
   refreshToken(token: TokenRefreshRequestDto): Promise<TokenRefreshResponseDto> {

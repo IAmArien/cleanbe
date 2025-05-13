@@ -3,9 +3,9 @@
  * Reuse as a whole or in part is prohibited without permission.
  */
 
-import { UserCredentialsDataSource, UserInfoDataSource, UserLoginDataSource } from "@/domain";
-import { UserCredentialsRepository, UserInfoRepository, UserLoginRepository } from "@/frameworks/repository";
-import { UserCredentialsDataSourceImpl, UserInfoDataSourceImpl, UserLoginDataSourceImpl } from "@/interfaces/controllers";
+import { UserCredentialsDataSource, UserInfoDataSource, UserAuthDataSource } from "@/domain";
+import { UserCredentialsRepository, UserInfoRepository, UserAuthRepository } from "@/frameworks/repository";
+import { UserCredentialsDataSourceImpl, UserInfoDataSourceImpl, UserAuthDataSourceImpl } from "@/interfaces/controllers";
 import { container } from "tsyringe";
 
 container.register<UserCredentialsRepository>(
@@ -32,15 +32,15 @@ container.register<UserInfoDataSource>(
     useClass: UserInfoDataSourceImpl
   }
 )
-container.register<UserLoginRepository>(
-  "UserLoginRepositoryFrameworks",
+container.register<UserAuthRepository>(
+  "UserAuthRepositoryFrameworks",
   {
-    useClass: UserLoginRepository
+    useClass: UserAuthRepository
   }
 )
-container.register<UserLoginDataSource>(
-  "UserLoginDataSourceImpl",
+container.register<UserAuthDataSource>(
+  "UserAuthDataSourceImpl",
   {
-    useClass: UserLoginDataSourceImpl
+    useClass: UserAuthDataSourceImpl
   }
 )

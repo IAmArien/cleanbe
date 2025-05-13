@@ -3,7 +3,7 @@
  * Reuse as a whole or in part is prohibited without permission.
  */
 
-import { UserCredentialsDataSource, UserCredentialsRepository, UserInfoDataSource, UserInfoRepository, UserLoginDataSource, UserLoginRepository } from "@/domain";
+import { UserCredentialsDataSource, UserCredentialsRepository, UserInfoDataSource, UserInfoRepository, UserAuthDataSource, UserAuthRepository } from "@/domain";
 import { CreateUserCredential, CreateUserInfo, DeleteUserCredential, DeleteUserInfo, GetUserInfo, LoginUser, PatchUserInfo, RefreshToken } from "@/domain/usecases";
 import { container } from "tsyringe";
 
@@ -103,14 +103,14 @@ container.register<DeleteUserInfo>(
   }
 );
 
-container.register<UserLoginRepository>(
-  "UserLoginRepositoryDomain",
+container.register<UserAuthRepository>(
+  "UserAuthRepositoryDomain",
   {
     useFactory: (container) => {
-      const dataSource = container.resolve<UserLoginDataSource>(
-        "UserLoginDataSourceImpl"
+      const dataSource = container.resolve<UserAuthDataSource>(
+        "UserAuthDataSourceImpl"
       );
-      return new UserLoginRepository(dataSource);
+      return new UserAuthRepository(dataSource);
     }
   }
 )
@@ -119,8 +119,8 @@ container.register<LoginUser>(
   "LoginUser",
   {
     useFactory: (container) => {
-      const repository = container.resolve<UserLoginRepository>(
-        "UserLoginRepositoryDomain"
+      const repository = container.resolve<UserAuthRepository>(
+        "UserAuthRepositoryDomain"
       );
       return new LoginUser(repository);
     }
@@ -131,8 +131,8 @@ container.register<RefreshToken>(
   "RefreshToken",
   {
     useFactory: (container) => {
-      const repository = container.resolve<UserLoginRepository>(
-        "UserLoginRepositoryDomain"
+      const repository = container.resolve<UserAuthRepository>(
+        "UserAuthRepositoryDomain"
       );
       return new RefreshToken(repository);
     }

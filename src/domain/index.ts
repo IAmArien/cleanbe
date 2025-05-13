@@ -7,12 +7,12 @@ export * from './models/userCredentials.model';
 export * from './models/userCredentials.dto';
 export * from './models/userInfo.model';
 export * from './models/userInfo.dto';
-export * from './models/userLogin.model';
-export * from './models/userLogin.dto';
+export * from './models/userAuth.model';
+export * from './models/userAuth.dto';
 
 export * from './repository/userCredentials.datasource';
 export * from './repository/userCredentials.repository';
 export * from './repository/userInfo.datasource';
 export * from './repository/userInfo.repository';
-export * from './repository/userLogin.datasource';
-export * from './repository/userLogin.repository';
+export * from './repository/userAuth.datasource';
+export * from './repository/userAuth.repository';

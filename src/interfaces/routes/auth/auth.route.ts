@@ -3,15 +3,15 @@
  * Reuse as a whole or in part is prohibited without permission.
  */
 
-import { UserLoginController } from "@/interfaces/controllers";
+import { UserAuthController } from "@/interfaces/controllers";
 import { Router } from "express";
 import { container } from "tsyringe";
 
 const router = Router();
 
-const loginController = container.resolve<UserLoginController>("UserLoginController");
+const authController = container.resolve<UserAuthController>("UserAuthController");
 
-router.post("/login", loginController.login);
-router.post("/refresh", loginController.refreshToken);
+router.post("/login", authController.login);
+router.post("/refresh", authController.refreshToken);
 
 export default router;

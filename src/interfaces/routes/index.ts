@@ -4,4 +4,4 @@
  */
 
 export { default as userRoutes } from './user/user.route';
-export { default as loginRoutes } from './login/login.route';
+export { default as authRoutes } from './auth/auth.route';
